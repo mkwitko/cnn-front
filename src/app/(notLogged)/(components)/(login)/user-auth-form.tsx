@@ -20,6 +20,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
     handleSubmit,
     submitForm,
     isSubmitting,
+    isLoading,
   } = useAuthForm();
 
   return (
@@ -41,7 +42,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
               type="text"
               placeholder="name@example.com"
               errorMessage={errors.email?.message}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isLoading}
             />
           </div>
           <div className="grid gap-1">
@@ -57,18 +58,20 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
               type="password"
               placeholder="*****"
               errorMessage={errors.password?.message}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isLoading}
             />
           </div>
           <button
             className="bg-black text-white rounded-normal p-2"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isLoading}
           >
-            {isSubmitting && (
-              <FaSpinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Sign In
+            {isSubmitting ||
+              (isLoading ? (
+                <FaSpinner className="h-5 w-5 animate-spin mx-auto" />
+              ) : (
+                <p>Sign In</p>
+              ))}
           </button>
         </div>
       </form>

@@ -6,8 +6,10 @@ import { toast } from 'react-toastify';
 import AuthClass from '@/classes/auth/AuthClass';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export function useAuthForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     setValue,
@@ -23,6 +25,7 @@ export function useAuthForm() {
   const router = useRouter();
 
   function submitForm(values: AuthFormSchema) {
+    setIsLoading(true);
     auth
       .postHttp('login', {
         email: values.email,
@@ -38,6 +41,9 @@ export function useAuthForm() {
           Cookies.set('auth', res.data.id);
           router.refresh();
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -49,5 +55,6 @@ export function useAuthForm() {
     handleSubmit,
     submitForm,
     isSubmitting,
+    isLoading,
   };
 }
