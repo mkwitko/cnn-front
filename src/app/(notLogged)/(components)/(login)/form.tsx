@@ -34,9 +34,8 @@ export function useAuthForm() {
           return;
         }
         if (res.status) {
-          console.log(res);
           auth.setCache(res.data, true);
-          Cookies.set('auth', res.data.email);
+          Cookies.set('auth', res.data.id);
           router.refresh();
         }
       });

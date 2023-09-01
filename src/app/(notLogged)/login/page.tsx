@@ -11,7 +11,7 @@ import { RegisterForm } from '../(components)/(register)/user-auth-form';
 import { SiCnn } from 'react-icons/si';
 
 export default function AuthenticationPage() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   return (
     <>
       <div className="md:hidden">

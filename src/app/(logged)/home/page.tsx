@@ -12,6 +12,7 @@ import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import * as CnnModal from '@/components/nonInteractiveComponents/Modal';
 import PolicyComponent from '@/components/applicationComponents/PolicyComponent';
+import Cookies from 'js-cookie';
 
 export default function Home() {
   const { consent, consentTypes, countries, states, users, auth } =
@@ -54,7 +55,7 @@ export default function Home() {
       const objectToUpdateDb = [
         consentTypes.hook.data.map((e: any) => {
           return {
-            userId: auth.hook.data.id,
+            userId: +Cookies.get('auth')!,
             consentId: e.id,
             value: 1,
           };

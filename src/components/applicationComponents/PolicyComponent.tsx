@@ -3,9 +3,10 @@ import React, { useContext, useEffect } from 'react';
 import { Switch } from '../ui/switch';
 import { LoggedContext } from '@/contexts/LoggedContext';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 export default function PolicyComponent({ canChoose, setOpen }: any) {
-  const { consent, auth, consentTypes } = useContext(LoggedContext);
+  const { consent, consentTypes } = useContext(LoggedContext);
   const [isSearching, setIsSearching] = React.useState(false);
   const [policyTypes, setPolicyTypes] = React.useState<any>([]);
 
@@ -51,7 +52,7 @@ export default function PolicyComponent({ canChoose, setOpen }: any) {
           const objectToUpdateDb = [
             consentTypes.hook.data.map((e: any, i: number) => {
               return {
-                userId: auth.hook.data.id,
+                userId: +Cookies.get('auth')!,
                 consentId: e.id,
                 value: consent.hook.consentChoice[i] ? 1 : 0,
               };

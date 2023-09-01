@@ -30,14 +30,16 @@ export default class CoreClass {
       setCache(key || this.cachePath, value);
   }
 
-  async getHttp<T>(method: typeof this.getMethods, url?: string) {
-    return CnnApi.get<T>(this.makeUrl(method, url || undefined))
+  async getHttp<T>(method: typeof this.getMethods, url?: string, body?: any) {
+    const config: AxiosRequestConfig = {};
+    config.data = body || null;
+    console.log(config);
+    return CnnApi.get<T>(this.makeUrl(method, url || undefined), config)
       .then((response) => {
         const { data } = response;
         return data;
       })
       .catch((err) => {
-        console.log('err - ', err);
         return err;
       });
   }
@@ -77,6 +79,7 @@ export default class CoreClass {
   async setClass<T>(
     shouldUpdate = true,
     method?: typeof this.getMethods,
+    body?: any,
     custom: {
       url?: string;
       cachePath?: string;
@@ -86,7 +89,11 @@ export default class CoreClass {
     const request = this.isCustomRequest(custom);
     if (!cache || !this.hasObject(cache) || shouldUpdate) {
       // TODO - remover any
-      const response: any = await this.getHttp<T>(method || '', request.url);
+      const response: any = await this.getHttp<T>(
+        method || '',
+        request.url,
+        body || null
+      );
       await this.setCache(response.data, shouldUpdate, request.cachePath);
       return response;
     } else {

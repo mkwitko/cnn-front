@@ -38,7 +38,7 @@ export default function Consult() {
           <div className="ml-auto">
             <CnnAlert.Alert>
               <CnnAlert.AlertTrigger>
-                {data.length > 0 ? (
+                {data && data.length > 0 ? (
                   <AiFillDelete className="w-6 h-6 text-primary" />
                 ) : (
                   <></>

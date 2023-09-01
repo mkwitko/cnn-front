@@ -9,6 +9,7 @@ import CountriesClass from '@/classes/countries/UsersClass';
 import StatesClass from '@/classes/states/StatesClass';
 import UsersClass from '@/classes/users/UsersClass';
 import React, { useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 interface LoggedContextProps {
   consent: ConsentClass;
@@ -32,9 +33,13 @@ export function LoggedContextProvider({
   //   const { email } = auth.hook.data;
 
   useEffect(() => {
-    consent.setClass(true).then((res) => {
-      consent.hook.setData(res.data);
-    });
+    consent
+      .setClass(true, '', {
+        userId: +Cookies.get('auth')!,
+      })
+      .then((res) => {
+        consent.hook.setData(res.data);
+      });
     consentTypes.setClass(true).then((res) => {
       consentTypes.hook.setData(res.data);
     });

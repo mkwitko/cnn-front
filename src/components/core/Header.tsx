@@ -30,7 +30,7 @@ export default function Header({
   const handleLogout = async () => {
     try {
       Cookies.remove('auth');
-      setCache(CACHE_PATH.AUTH.AUTH);
+      localStorage.clear();
       router.refresh();
     } catch (err: any) {
       console.log(err.message);
